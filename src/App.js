@@ -1,24 +1,26 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import DrinksList from "./containers/DrinksList";
+
+require('dotenv').config();
+
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+          Welcome to Caffeine HL
       </header>
+
+      <div>
+
+          <p>Here goes the graph</p>
+          <h3>Choose a drink:</h3>
+
+          <DrinksList />
+
+
+      </div>
     </div>
   );
 }
