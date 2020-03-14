@@ -1,4 +1,5 @@
 import React from "react";
+import {Button} from "react-bootstrap";
 
 class Drink extends React.Component {
 
@@ -9,9 +10,9 @@ class Drink extends React.Component {
 
     render() {
         return (
-            <div>
+            <Button>
                 {this.props.drink.name}
-            </div>
+            </Button>
         )
     }
 
