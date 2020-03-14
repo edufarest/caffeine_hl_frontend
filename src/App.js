@@ -2,8 +2,6 @@ import React from 'react';
 import './App.css';
 import DrinksList from "./containers/DrinksList";
 
-require('dotenv').config();
-
 
 function App() {
   return (

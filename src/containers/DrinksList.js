@@ -1,6 +1,8 @@
 import React from "react";
+import Drink from "../components/Drink";
 
-const API = process.env.API_URL;
+
+const API = "http://localhost:3000";
 
 class DrinksList extends React.Component {
 
@@ -14,12 +16,23 @@ class DrinksList extends React.Component {
     }
 
     componentDidMount() {
-        fetch(`${API}/drinks`).then(res => res.json())
-            .then(drinks => {
 
-                this.setState({drinks: drinks});
+
+
+        fetch(`${API}/drinks`).then(res => {
+
+            console.log("Got: ");
+            console.log(res)
+
+            res.json()
+                .then(drinks => {
+
+                    console.log("Got drinks: " + drinks);
+
+                    this.setState({drinks: drinks});
 
                 })
+        });
 
     }
 
@@ -31,7 +44,9 @@ class DrinksList extends React.Component {
             <div>
                 {this.state.drinks && this.state.drinks.map((drink, index) => {
 
-                    // return <Drink drink=drink key=index>
+                    console.log("Drink: " + drink.name);
+
+                    return <Drink drink={drink} key={index}/>
 
                 })}
             </div>
