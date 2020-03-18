@@ -34,6 +34,22 @@ class DrinksList extends React.Component {
 
     }
 
+    createDrinkRecord(drink) {
+
+        fetch(`${API}/records`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({drink: drink, date: Date.now()})
+        }).then((res) => {
+            res.json()
+                .then(data => {
+                    console.log(data)
+                })
+        })
+
+    }
 
 
     render() {
@@ -63,7 +79,7 @@ class DrinksList extends React.Component {
 
                         console.log("Drink: " + drink.name);
 
-                        return <Drink drink={drink} key={index}/>
+                        return <Drink drink={drink} key={index} createDrinkRecord={this.createDrinkRecord}/>
 
                     })}
                 </ButtonGroup>
