@@ -5,12 +5,15 @@ import CaffeineGraph from "./containers/CaffeineGraph"
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+// TODO Create component wrapper
+
 function App() {
   return (
     <div className="App">
       <header className="">
           Welcome to Caffeine HL
       </header>
+
 
       <div>
 
