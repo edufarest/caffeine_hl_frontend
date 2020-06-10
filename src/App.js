@@ -109,19 +109,15 @@ class App extends React.Component {
 
         return (
             <div className="App">
-                <header className="">
-                    Welcome to Caffeine HL
-                </header>
-
-
                 <div>
 
                     <CaffeineGraph drinkRecords={this.state.drinkRecords} date={this.state.date}/>
-                    
+
                     <h3>Choose a drink:</h3>
 
 
-                    <DrinksList drinks={this.state.drinks} createDrinkRecord={drink => {this.createDrinkRecord(drink)}}/>
+                    <DrinksList  drinks={this.state.drinks}
+                                createDrinkRecord={drink => {this.createDrinkRecord(drink)}}/>
 
 
                 </div>

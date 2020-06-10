@@ -18,7 +18,7 @@ class DrinksList extends React.Component {
     render() {
 
         return (
-            <div>
+            <div className="drinks-list">
 
                 <InputGroup className="mb-3">
                     <FormControl
