@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import DrinksList from "./containers/DrinksList";
 import CaffeineGraph from "./containers/CaffeineGraph"
+import DrinkRecords from "./containers/DrinkRecords";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -105,13 +106,20 @@ class App extends React.Component {
 
     }
 
+    deleteDrinkRecord(id) {
+
+    }
+
     render() {
 
         return (
             <div className="App">
                 <div>
 
-                    <CaffeineGraph drinkRecords={this.state.drinkRecords} date={this.state.date}/>
+                    <div className="drinks-records">
+                        <DrinkRecords drinkRecords={this.state.drinkRecords} delete={(id) => this.deleteDrinkRecord(id)}/>
+                        <CaffeineGraph drinkRecords={this.state.drinkRecords} date={this.state.date}/>
+                    </div>
 
                     <h3>Choose a drink:</h3>
 

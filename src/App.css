@@ -3,6 +3,7 @@
   background-image: url("assets/wood1.jpg");
   background-attachment: fixed;
   background-size: contain;
+  min-height: 100vh;
 }
 
 .drinks-list {
@@ -10,3 +11,35 @@
   margin: auto;
 }
 
+.drinks-records {
+
+  /*TODO Consider changing to grid to have 30% 70%*/
+  display: flex;
+  justify-content: space-around;
+
+}
+
+
+.drink-records__list {
+  background: white;
+  padding: 5px 20px 20px;
+  border-radius: 5px;
+  border-width: 3px;
+  border-style: solid;
+}
+
+.drink-records__record {
+
+}
+
+.drink-records__record__name {
+
+}
+
+.drink-records__record__caff {
+
+}
+
+.drink-records__record__serving {
+
+}
