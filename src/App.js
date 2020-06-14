@@ -5,6 +5,7 @@ import CaffeineGraph from "./containers/CaffeineGraph"
 import DrinkRecords from "./containers/DrinkRecords";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '@fortawesome/fontawesome-free/css/all.css';
 
 require('dotenv').config();
 
@@ -108,6 +109,14 @@ class App extends React.Component {
 
     deleteDrinkRecord(id) {
 
+        fetch(`${API}/records/${id}`, {
+            method: 'DELETE'
+        }).then(res => {
+            if (res.ok) {
+                this.getRecords();
+            }
+        })
+
     }
 
     render() {
@@ -117,7 +126,7 @@ class App extends React.Component {
                 <div>
 
                     <div className="drinks-records">
-                        <DrinkRecords drinkRecords={this.state.drinkRecords} delete={(id) => this.deleteDrinkRecord(id)}/>
+                        <DrinkRecords drinkRecords={this.state.drinkRecords} deleteDrinkRecord={(id) => this.deleteDrinkRecord(id)}/>
                         <CaffeineGraph drinkRecords={this.state.drinkRecords} date={this.state.date}/>
                     </div>
 

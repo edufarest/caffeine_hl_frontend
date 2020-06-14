@@ -46,6 +46,7 @@ class DrinkRecords extends React.Component {
 
             return (
                 <tr className="drink-records__record">
+                    <i className={"fas fa-times"} onClick={() => this.props.deleteDrinkRecord(record.id)}></i>
                     <td className="drink-records__record__name">{drink.name}</td>
                     <td className="drink-records__record__caff">{drink.caffeine} mg</td>
                     <td className="drink-records__record__serving">{drink.serving} ml</td>
@@ -59,6 +60,7 @@ class DrinkRecords extends React.Component {
             <div className="drink-records__list">
                 <table>
                     <tr>
+                        <th>Remove</th>
                         <th>Name</th>
                         <th>Caffeine</th>
                         <th>Serving</th>
