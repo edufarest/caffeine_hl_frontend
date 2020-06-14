@@ -1,7 +1,6 @@
 .App {
   text-align: center;
   background-image: url("assets/wood1.jpg");
-  background-attachment: fixed;
   background-size: contain;
   min-height: 100vh;
 }
@@ -9,6 +8,17 @@
 .drinks-list {
   width: fit-content;
   margin: auto;
+}
+
+.caffeine-indicator {
+  background-image: url("assets/coffee_stain2.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: fit-content;
+  text-align: center;
+  margin: auto;
+  padding: 5%;
 }
 
 .drinks-records {

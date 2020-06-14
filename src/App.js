@@ -10,6 +10,7 @@ import '@fortawesome/fontawesome-free/css/all.css';
 require('dotenv').config();
 
 const API = process.env.REACT_APP_API;
+const caffHL = 330; // minutes. 5.5 hours
 
 class App extends React.Component {
 
@@ -20,8 +21,8 @@ class App extends React.Component {
 
             drinks: [],
             drinkRecords: [],
-            date: Date.now()
-
+            date: Date.now(), // TODO Update in bg
+            currCaffeine: 0
         }
 
 
@@ -50,6 +51,7 @@ class App extends React.Component {
                 console.log(res);
 
                 const records = [];
+                let currCaff = 0;
 
                 // "_id":"5eddc366753b0c74a7509b29","date":"2020-06-08T04:49:42.102Z",
                 //     "drink":{"name":"10 Hour Energy Shot","_id":"5e5f325652ea8febab944a33",
@@ -60,16 +62,26 @@ class App extends React.Component {
 
                     if (rec.drink) {
 
+                        const name = rec.drink.name;
+                        const servingSize = rec.drink.servingSize;
+                        const caffeine = rec.drink.caffeine;
+
                         drink = {
-                            id: rec.drink._id, name: rec.drink.name, serving: rec.drink.servingSize,
-                            caffeine: rec.drink.caffeine
+                            id: rec.drink._id, name: name, serving: servingSize,
+                            caffeine: caffeine
                         };
+
+                        // TODO Take absorption time in consideration. ~30m?
+                        const duration = (new Date(this.state.date).getTime() - new Date(rec.date).getTime() ) / 60000;
+
+                        currCaff += caffeine * Math.pow(0.5, duration / caffHL);
+
                     }
 
                     records.push({id: rec._id, date: rec.date, drink: drink});
                 });
 
-                this.setState({drinkRecords: records});
+                this.setState({drinkRecords: records, currCaffeine: currCaff});
 
             }))
 
@@ -124,6 +136,10 @@ class App extends React.Component {
         return (
             <div className="App">
                 <div>
+
+                    <div className="caffeine-indicator">
+                        <span>Caffeine: {this.state.currCaffeine.toFixed(2)} mg</span>
+                    </div>
 
                     <div className="drinks-records">
                         <DrinkRecords drinkRecords={this.state.drinkRecords} deleteDrinkRecord={(id) => this.deleteDrinkRecord(id)}/>
