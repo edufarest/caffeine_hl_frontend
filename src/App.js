@@ -72,7 +72,7 @@ class App extends React.Component {
                         };
 
                         // TODO Take absorption time in consideration. ~30m?
-                        const duration = (new Date(this.state.date).getTime() - new Date(rec.date).getTime() ) / 60000;
+                        const duration = (new Date(this.state.date).getTime() - new Date(rec.date).getTime() ) / 60000; // Duration in minutes
 
                         currCaff += caffeine * Math.pow(0.5, duration / caffHL);
 
