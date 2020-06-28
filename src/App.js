@@ -9,6 +9,11 @@ import '@fortawesome/fontawesome-free/css/all.css';
 import Navbar from "react-bootstrap/Navbar";
 import Form from "react-bootstrap/Form";
 
+import RegisterModal from "./components/Modals/RegisterModal";
+import LoginModal from "./components/Modals/LoginModal";
+
+import Cookies from 'js-cookie';
+
 require('dotenv').config();
 
 const API = process.env.REACT_APP_API;
@@ -25,7 +30,8 @@ class App extends React.Component {
             drinkRecords: [],
             date: Date.now(), // TODO Update in bg
             currCaffeine: 0,
-            user: null
+            user: null,
+            modal: ""
         }
 
         // fetch("http://localhost:3000/user/login", {
@@ -56,7 +62,7 @@ class App extends React.Component {
 
         console.log("Getting records")
 
-        fetch(`${API}/records?date=${this.state.date}`)
+        fetch(`${API}/records?date=${this.state.date}`, {credentials: "include"})
             .then(res => res.json().then(res => {
                 console.log(res);
 
@@ -152,12 +158,17 @@ class App extends React.Component {
 
                     <Navbar.Text className="justify-content-end">
                         {username? `Welcome, ${username}` :
-                            <span><a href="#">Login</a> / <a href="#">Register</a></span>}
+                            <span><a href="#" onClick={() => this.setState({modal: "login"})}>Login</a>
+                                / <a href="#" onClick={() => this.setState({modal: "register"})}>Register</a></span>}
 
                     </Navbar.Text>
 
                 </Navbar>
                 <div>
+
+
+                    <RegisterModal show={this.state.modal === "register"} handleClose={() => this.setState({modal: ""})} />
+                    <LoginModal show={this.state.modal === "login"} handleClose={() => this.setState({modal: ""})} />
 
                     <div className="caffeine-indicator">
                         <span>Caffeine: {this.state.currCaffeine.toFixed(2)} mg</span>
@@ -172,7 +183,7 @@ class App extends React.Component {
 
 
                     <DrinksList  drinks={this.state.drinks}
-                                createDrinkRecord={drink => {this.createDrinkRecord(drink)}}/>
+                                 createDrinkRecord={drink => {this.createDrinkRecord(drink)}}/>
 
 
                 </div>
