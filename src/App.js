@@ -16,7 +16,9 @@ import Cookies from 'js-cookie';
 
 require('dotenv').config();
 
-const API = process.env.REACT_APP_API;
+const API = process.env.REACT_APP_API || "";
+
+console.log(API);
 const caffHL = 330; // minutes. 5.5 hours
 
 class App extends React.Component {

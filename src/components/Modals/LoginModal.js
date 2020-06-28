@@ -2,6 +2,9 @@ import React, {useState} from "react";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import {Button} from "react-bootstrap";
+
+import Cookies from 'js-cookie'
+
 require('dotenv').config();
 
 
@@ -27,6 +30,7 @@ const LoginModal = props => {
             }
         }).then(res => {
             if (res.ok) {
+                console.log(Cookies.get())
                 setSpinner(false);
                 props.handleClose();
             }
