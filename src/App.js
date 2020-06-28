@@ -6,6 +6,8 @@ import DrinkRecords from "./containers/DrinkRecords";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.css';
+import Navbar from "react-bootstrap/Navbar";
+import Form from "react-bootstrap/Form";
 
 require('dotenv').config();
 
@@ -22,9 +24,17 @@ class App extends React.Component {
             drinks: [],
             drinkRecords: [],
             date: Date.now(), // TODO Update in bg
-            currCaffeine: 0
+            currCaffeine: 0,
+            user: null
         }
 
+        // fetch("http://localhost:3000/user/login", {
+        //     method: "POST",
+        //     body: JSON.stringify({username: "edu", password: "123"}),
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     }
+        // })
 
     }
 
@@ -133,8 +143,20 @@ class App extends React.Component {
 
     render() {
 
+        const username = this.state.user && this.state.user.username;
+
         return (
             <div className="App">
+                <Navbar bg="dark" expand="xl">
+                    <Navbar.Brand>Caffeine Half-Life</Navbar.Brand>
+
+                    <Navbar.Text className="justify-content-end">
+                        {username? `Welcome, ${username}` :
+                            <span><a href="#">Login</a> / <a href="#">Register</a></span>}
+
+                    </Navbar.Text>
+
+                </Navbar>
                 <div>
 
                     <div className="caffeine-indicator">
