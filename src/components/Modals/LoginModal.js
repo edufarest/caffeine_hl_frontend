@@ -30,7 +30,6 @@ const LoginModal = props => {
             }
         }).then(res => {
             if (res.ok) {
-                console.log(Cookies.get())
                 setSpinner(false);
                 props.handleClose();
             }
