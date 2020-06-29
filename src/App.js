@@ -6,10 +6,19 @@ import DrinkRecords from "./containers/DrinkRecords";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.css';
+import Navbar from "react-bootstrap/Navbar";
+import Form from "react-bootstrap/Form";
+
+import RegisterModal from "./components/Modals/RegisterModal";
+import LoginModal from "./components/Modals/LoginModal";
+
+import Cookies from 'js-cookie';
 
 require('dotenv').config();
 
-const API = process.env.REACT_APP_API;
+const API = process.env.REACT_APP_API || "";
+
+console.log(API);
 const caffHL = 330; // minutes. 5.5 hours
 
 class App extends React.Component {
@@ -22,9 +31,18 @@ class App extends React.Component {
             drinks: [],
             drinkRecords: [],
             date: Date.now(), // TODO Update in bg
-            currCaffeine: 0
+            currCaffeine: 0,
+            user: null,
+            modal: ""
         }
 
+        // fetch("http://localhost:3000/user/login", {
+        //     method: "POST",
+        //     body: JSON.stringify({username: "edu", password: "123"}),
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     }
+        // })
 
     }
 
@@ -46,7 +64,7 @@ class App extends React.Component {
 
         console.log("Getting records")
 
-        fetch(`${API}/records?date=${this.state.date}`)
+        fetch(`${API}/records?date=${this.state.date}`, {credentials: "include"})
             .then(res => res.json().then(res => {
                 console.log(res);
 
@@ -133,9 +151,26 @@ class App extends React.Component {
 
     render() {
 
+        const username = this.state.user && this.state.user.username;
+
         return (
             <div className="App">
+                <Navbar bg="dark" expand="xl">
+                    <Navbar.Brand>Caffeine Half-Life</Navbar.Brand>
+
+                    <Navbar.Text className="justify-content-end">
+                        {username? `Welcome, ${username}` :
+                            <span><a href="#" onClick={() => this.setState({modal: "login"})}>Login</a>
+                                / <a href="#" onClick={() => this.setState({modal: "register"})}>Register</a></span>}
+
+                    </Navbar.Text>
+
+                </Navbar>
                 <div>
+
+
+                    <RegisterModal show={this.state.modal === "register"} handleClose={() => this.setState({modal: ""})} />
+                    <LoginModal show={this.state.modal === "login"} handleClose={() => this.setState({modal: ""})} />
 
                     <div className="caffeine-indicator">
                         <span>Caffeine: {this.state.currCaffeine.toFixed(2)} mg</span>
@@ -150,7 +185,7 @@ class App extends React.Component {
 
 
                     <DrinksList  drinks={this.state.drinks}
-                                createDrinkRecord={drink => {this.createDrinkRecord(drink)}}/>
+                                 createDrinkRecord={drink => {this.createDrinkRecord(drink)}}/>
 
 
                 </div>
