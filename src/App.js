@@ -16,10 +16,8 @@ import Cookies from 'js-cookie';
 
 require('dotenv').config();
 
-const API = process.env.REACT_APP_API || "";
+const caffHL = process.env.REACT_APP_CAFFEINE_HL; //330 minutes. 5.5 hours
 
-console.log(API);
-const caffHL = 330; // minutes. 5.5 hours
 
 class App extends React.Component {
 
@@ -48,7 +46,7 @@ class App extends React.Component {
 
 
     getDrinks = () => {
-        fetch(`${API}/drinks`).then(res => {
+        fetch('/drinks').then(res => {
 
             res.json()
                 .then(drinks => {
@@ -62,9 +60,9 @@ class App extends React.Component {
 
     getRecords = () => {
 
-        console.log("Getting records")
+        console.log("Getting records");
 
-        fetch(`${API}/records?date=${this.state.date}`, {credentials: "include"})
+        fetch(`/records?date=${this.state.date}`, {credentials: "include"})
             .then(res => res.json().then(res => {
                 console.log(res);
 
@@ -121,7 +119,7 @@ class App extends React.Component {
 
     createDrinkRecord(drink) {
 
-        fetch(`${API}/records`, {
+        fetch('/records', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -139,7 +137,7 @@ class App extends React.Component {
 
     deleteDrinkRecord(id) {
 
-        fetch(`${API}/records/${id}`, {
+        fetch(`/records/${id}`, {
             method: 'DELETE'
         }).then(res => {
             if (res.ok) {
@@ -177,8 +175,8 @@ class App extends React.Component {
                     </div>
 
                     <div className="drinks-records">
-                        <DrinkRecords drinkRecords={this.state.drinkRecords} deleteDrinkRecord={(id) => this.deleteDrinkRecord(id)}/>
                         <CaffeineGraph drinkRecords={this.state.drinkRecords} date={this.state.date}/>
+                        <DrinkRecords drinkRecords={this.state.drinkRecords} deleteDrinkRecord={(id) => this.deleteDrinkRecord(id)}/>
                     </div>
 
                     <h3>Choose a drink:</h3>
