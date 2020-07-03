@@ -10,6 +10,8 @@ require('dotenv').config();
 
 const LoginModal = props => {
 
+    const API = process.env.REACT_APP_API;
+
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
@@ -19,7 +21,7 @@ const LoginModal = props => {
 
         setSpinner(true);
 
-        fetch('/user/login', {
+        fetch(API+'/user/login', {
             method: "POST",
             body: JSON.stringify({username: username, password: password}),
             credentials: "include",

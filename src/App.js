@@ -17,7 +17,7 @@ import Cookies from 'js-cookie';
 require('dotenv').config();
 
 const caffHL = process.env.REACT_APP_CAFFEINE_HL; //330 minutes. 5.5 hours
-
+const API = process.env.REACT_APP_API;
 
 class App extends React.Component {
 
@@ -46,7 +46,7 @@ class App extends React.Component {
 
 
     getDrinks = () => {
-        fetch('/drinks').then(res => {
+        fetch(API+'/drinks').then(res => {
 
             res.json()
                 .then(drinks => {
@@ -62,7 +62,7 @@ class App extends React.Component {
 
         console.log("Getting records");
 
-        fetch(`/records?date=${this.state.date}`, {credentials: "include"})
+        fetch(`${API}/records?date=${this.state.date}`, {credentials: "include"})
             .then(res => res.json().then(res => {
                 console.log(res);
 
@@ -119,7 +119,7 @@ class App extends React.Component {
 
     createDrinkRecord(drink) {
 
-        fetch('/records', {
+        fetch(API+'/records', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -137,7 +137,7 @@ class App extends React.Component {
 
     deleteDrinkRecord(id) {
 
-        fetch(`/records/${id}`, {
+        fetch(`${API}/records/${id}`, {
             method: 'DELETE'
         }).then(res => {
             if (res.ok) {
