@@ -7,8 +7,6 @@ require('dotenv').config();
 
 const RegisterModal = props => {
 
-    const API = process.env.REACT_APP_API;
-
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
@@ -18,7 +16,7 @@ const RegisterModal = props => {
 
         setSpinner(true);
 
-        fetch(`${API}/user/register`, {
+        fetch('/user/register', {
             method: "POST",
             body: JSON.stringify({username: username, password: password}),
             headers: {
