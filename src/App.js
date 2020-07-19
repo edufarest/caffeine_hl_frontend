@@ -54,7 +54,11 @@ class App extends React.Component {
 
                     this.setState({drinks: drinks});
 
-                })
+                }).catch(err => {
+                    console.error(err);
+            })
+        }).catch(err => {
+            console.error(err);
         });
     };
 
@@ -124,6 +128,7 @@ class App extends React.Component {
             headers: {
                 'Content-Type': 'application/json'
             },
+            credentials: "include",
             body: JSON.stringify({drink: drink, date: Date.now()})
         }).then((res) => {
             res.json()
@@ -143,6 +148,8 @@ class App extends React.Component {
             if (res.ok) {
                 this.getRecords();
             }
+        }).catch(err => {
+           console.error(err);
         })
 
     }
