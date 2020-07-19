@@ -59,3 +59,7 @@
 .drink-records__record__serving {
 
 }
+
+.bg-dark > span {
+    color: white;
+}

@@ -30,6 +30,13 @@ const LoginModal = props => {
             }
         }).then(res => {
             if (res.ok) {
+                res.json().then(res => {
+
+                    if (res.username) {
+                        props.setUser({username: res.username});
+                    }
+
+                });
                 setSpinner(false);
                 props.handleClose();
             }
