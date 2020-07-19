@@ -160,7 +160,7 @@ class App extends React.Component {
 
         return (
             <div className="App">
-                <Navbar bg="dark" expand="xl">
+                <Navbar bg="dark" expand="xl"i variant="dark">
                     <Navbar.Brand>Caffeine Half-Life</Navbar.Brand>
 
                     <Navbar.Text className="justify-content-end">
@@ -174,8 +174,8 @@ class App extends React.Component {
                 <div>
 
 
-                    <RegisterModal show={this.state.modal === "register"} handleClose={() => this.setState({modal: ""})} />
-                    <LoginModal show={this.state.modal === "login"} handleClose={() => this.setState({modal: ""})} />
+                    <RegisterModal show={this.state.modal === "register"} handleClose={() => this.setState({modal: ''})} setUser={user => this.setState({user: user})}/>
+                    <LoginModal show={this.state.modal === "login"} handleClose={() => this.setState({modal: ''})} setUser={user => this.setState({user: user})}/>
 
                     <div className="caffeine-indicator">
                         <span>Caffeine: {this.state.currCaffeine.toFixed(2)} mg</span>
