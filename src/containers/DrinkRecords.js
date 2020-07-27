@@ -46,11 +46,11 @@ class DrinkRecords extends React.Component {
 
             return (
                 <tr className="drink-records__record">
-                    <i className={"fas fa-times"} onClick={() => this.props.deleteDrinkRecord(record.id)}></i>
+                    <i className={"fas fa-times"} onClick={() => this.props.deleteDrinkRecord(record.id)}/>
                     <td className="drink-records__record__name">{drink.name}</td>
                     <td className="drink-records__record__caff">{drink.caffeine} mg</td>
                     <td className="drink-records__record__serving">{drink.serving} ml</td>
-                    <td className="drink-records__record__time">{this.dateTimeString(record.date)}</td>
+                    <td className="drink-records__record__time" onClick={() => this.setState({showTimeModal: true, drinkRecord: record.id})}>{this.dateTimeString(record.date)}</td>
                 </tr>
             )
         });

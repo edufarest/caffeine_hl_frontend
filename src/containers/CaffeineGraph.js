@@ -23,7 +23,11 @@ class DrinksList extends React.Component {
         //
         // currCaff += caffeine * Math.pow(0.5, duration / caffHL);
 
-        const duration = (time - new Date(record.date).getTime()) / 60000;
+        const duration = (time - new Date(record.date).getTime()) / 6000;
+
+        if (duration < 0) {
+            return 0;
+        }
 
         return (record.drink.caffeine * Math.pow(0.5, duration / caffHL)).toFixed(2);
 
@@ -43,8 +47,11 @@ class DrinksList extends React.Component {
         const now = Date.now();
 
         const hours = 12;
+        const hToMs = 60*60*1000; // Hour to Milliseconds
 
-        for (let i = 0; i < hours*60*60*10000/5; i += 60*60*10000/5) {
+        for (let i = -hours*hToMs/5; i < hours*hToMs/5; i += hToMs/5) {
+
+            console.log(i);
 
             const timestamp = now + i;
             const dateString = date.format(new Date(timestamp), 'hh:mm A');
@@ -92,7 +99,7 @@ class DrinksList extends React.Component {
 
         return (
             <div className="caffeine_graph">
-                <AreaChart  width={2000} height={400} data={data}>
+                <AreaChart  width={2000} height={400} data={data} >
 
                    <XAxis dataKey="time"/>
                    <YAxis/>
