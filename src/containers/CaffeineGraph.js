@@ -2,7 +2,7 @@ import React from "react";
 import Drink from "../components/Drink";
 import {ButtonGroup, FormControl, InputGroup} from "react-bootstrap";
 
-import {AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip} from "recharts";
+import {Brush, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ReferenceArea} from "recharts";
 import date from 'date-and-time';
 
 const caffHL = process.env.REACT_APP_CAFFEINE_HL;
@@ -12,6 +12,7 @@ class DrinksList extends React.Component {
 
     constructor(props) {
         super(props);
+
 
 
     }
@@ -25,10 +26,16 @@ class DrinksList extends React.Component {
 
         const duration = (time - new Date(record.date).getTime()) / 60000;
 
+        if (duration < 0) {
+            return 0;
+        }
+
         return (record.drink.caffeine * Math.pow(0.5, duration / caffHL)).toFixed(2);
 
 
     }
+
+
 
 
     render() {
@@ -42,14 +49,15 @@ class DrinksList extends React.Component {
 
         const now = Date.now();
 
-        const hours = 12;
+        const hours = 24;
+        const hourToMs = 60*60*1000;
 
-        for (let i = 0; i < hours*60*60*10000/5; i += 60*60*10000/5) {
+        for (let i = -hours*hourToMs; i < hours*hourToMs; i += hourToMs/5) {
 
             const timestamp = now + i;
             const dateString = date.format(new Date(timestamp), 'hh:mm A');
 
-            console.log(dateString);
+            console.log(`${i}: ${dateString}`);
 
             const records = {time: dateString};
 
@@ -84,7 +92,7 @@ class DrinksList extends React.Component {
 
             areas.push(
                 <Area type='monotone' dataKey={rec.drink.name} stackId="1"
-                stroke={color} fill={color}/>
+                stroke={color} fill={color} allowDataOverflow={true}/>
             )
 
         });
@@ -92,13 +100,20 @@ class DrinksList extends React.Component {
 
         return (
             <div className="caffeine_graph">
-                <AreaChart  width={2000} height={400} data={data}>
+                <AreaChart
+                    width={2000}
+                    height={400}
+                    data={data}
+                >
 
                    <XAxis dataKey="time"/>
                    <YAxis/>
                    <Tooltip/>
+                   <Brush dataKey='time' height={30}/>
 
                     {areas}
+
+
 
                 </AreaChart>
             </div>
