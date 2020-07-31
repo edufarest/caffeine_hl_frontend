@@ -10,7 +10,7 @@ class Drink extends React.Component {
 
     render() {
         return (
-            <Button onClick={() => {this.props.createDrinkRecord(this.props.drink._id)}}
+            <Button onClick={() => {this.props.selectDrink(this.props.drink)}}
             >
                 {this.props.drink.name}: {this.props.drink.caffeine} mg
             </Button>

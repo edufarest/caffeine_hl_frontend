@@ -39,7 +39,7 @@ class DrinksList extends React.Component {
 
                     }).map((drink, index) => {
 
-                        return <Drink drink={drink} key={index} createDrinkRecord={this.props.createDrinkRecord}/>
+                        return <Drink drink={drink} key={index} selectDrink={drink => this.props.selectDrink(drink)}/>
 
                     })}
                 </ButtonGroup>

@@ -11,6 +11,7 @@ import Form from "react-bootstrap/Form";
 
 import RegisterModal from "./components/Modals/RegisterModal";
 import LoginModal from "./components/Modals/LoginModal";
+import RecordsModal from './components/Modals/RecordsModal';
 
 import Cookies from 'js-cookie';
 
@@ -33,18 +34,9 @@ class App extends React.Component {
             user: null,
             modal: ""
         }
-
-        // fetch("http://localhost:3000/user/login", {
-        //     method: "POST",
-        //     body: JSON.stringify({username: "edu", password: "123"}),
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     }
-        // })
-
     }
 
-
+    // FIXME Better organize these functions
     getDrinks = () => {
         fetch(API+'/drinks').then(res => {
 
@@ -121,7 +113,7 @@ class App extends React.Component {
     // }
 
 
-    createDrinkRecord(drink) {
+    createDrinkRecord(drink, date = Date.now()) {
 
         fetch(API+'/records', {
             method: 'POST',
@@ -129,7 +121,7 @@ class App extends React.Component {
                 'Content-Type': 'application/json'
             },
             credentials: "include",
-            body: JSON.stringify({drink: drink, date: Date.now()})
+            body: JSON.stringify({drink: drink, date: date})
         }).then((res) => {
             res.json()
                 .then(data => {
@@ -176,6 +168,7 @@ class App extends React.Component {
 
                     <RegisterModal show={this.state.modal === "register"} handleClose={() => this.setState({modal: ''})} setUser={user => this.setState({user: user})}/>
                     <LoginModal show={this.state.modal === "login"} handleClose={() => this.setState({modal: ''})} setUser={user => this.setState({user: user})}/>
+                    <RecordsModal show={this.state.modal === "create"} handleClose={() => this.setState({modal: ''})} createDrinkRecord={(drink, date) => this.createDrinkRecord(drink, date)} selectedDrink={this.state.selectedDrink}/>
 
                     <div className="caffeine-indicator">
                         <span>Caffeine: {this.state.currCaffeine.toFixed(2)} mg</span>
@@ -189,7 +182,7 @@ class App extends React.Component {
                     <h3>Choose a drink:</h3>
 
 
-                    <DrinksList  drinks={this.state.drinks}
+                    <DrinksList  drinks={this.state.drinks} selectDrink={drink => this.setState({modal: 'create', selectedDrink: drink})}
                                  createDrinkRecord={drink => {this.createDrinkRecord(drink)}}/>
 
 
